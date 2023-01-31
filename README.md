@@ -1,70 +1,224 @@
-# Getting Started with Create React App
+## Default Props
+## Conditional Rendering
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Conditional Rendering allows us to render different elements or components based on a condition.
 
-## Available Scripts
+Different ways to implement Conditional Rendering are:
 
-In the project directory, you can run:
+* Using an If...Else Statement
+* Using Element Variables
+* Using Ternary Operators
+* Using Logical && Operator
 
-### `npm start`
+------------------------------------------------------------------------
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Using an If...Else Statement
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# File: src/App.js
 
-### `npm test`
+import { Component } from "react"
+import './App.css'
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+class App extends Component {
+  state = { isLoggedIn: true }
 
-### `npm run build`
+   renderAuthButton = () => {
+    const {isLoggedIn} = this.state
+    if (isLoggedIn === true) {
+      return <button>Logout</button>
+    }
+    return <button>Login</button>
+  }
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  render() {
+    return (
+     <div className="container">
+        {this.renderAuthButton()}
+      </div>
+    )
+  }
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+export default App
+------------------------------------------------------------------------
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Using Element Variables
 
-### `npm run eject`
+# File: src/App.js
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+import { Component } from "react"
+import './App.css'
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+class App extends Component {
+  state = { isLoggedIn: true }
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  render() {
+    const { isLoggedIn } = this.state
+    let authButton
+    if (isLoggedIn) {
+      authButton = <button>Logout</button>
+    } else {
+      authButton = <button>Login</button>
+    }
+    return (
+      <div className="container">
+        <h1>React JS</h1>
+        {authButton}
+      </div>
+    )
+ }
+}
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+export default App
+------------------------------------------------------------------------
 
-## Learn More
+## Using Ternary Operators
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# File: src/App.js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+import { Component } from "react"
+import './App.css'
 
-### Code Splitting
+class App extends Component {
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  render() {
+    const { isLoggedIn } = this.state
+    return (
+      <div className="container">
+        {isLoggedIn ? <button>Logout</button> : <button>Login</button>}
+      </div>
+    )
+  }
+}
 
-### Analyzing the Bundle Size
+export default App
+------------------------------------------------------------------------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Using Logical && Operator
 
-### Making a Progressive Web App
+# File: src/App.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+import { Component } from "react"
+import './App.css'
 
-### Advanced Configuration
+class App extends Component {
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  render() {
+    const { isLoggedIn } = this.state
+    return (
+      <div className="container">
+        {isLoggedIn && <button>Logout</button>}
+        {!isLoggedIn && <button>Login</button>}
+      </div>
+    )
+  }
+}
 
-### Deployment
+export default App
+------------------------------------------------------------------------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#  Default Props
 
-### `npm run build` fails to minify
+defaultProps is a property in React Component used to set default values for the props. This is similar to adding default parameters to the function.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Syntax:
+
+// Component Definition
+
+ComponentName.defaultProps = {
+  propName1: "propValue1",
+  propName2: "propValue2"
+}
+
+// Exporting Component
+========================================================================
+
+# File: src/Welcome/index.js
+
+const Welcome = (props) => {
+  const { name, greeting } = props;
+  return (
+    <h1 className="message">
+      {greeting}, {name}
+    </h1>
+  );
+};
+
+Welcome.defaultProps = {
+  name: "Sairram",
+  greeting: "Hello"
+};
+
+export default Welcome;
+
+# File: src/App.js
+
+import { Component } from "react";
+import Welcome from "./Welcome";
+
+class App extends Component {
+  state = { isLoggedIn: true };
+  render() {
+    const { isLoggedIn } = this.state;
+    return (
+      <div className="container">
+        <Welcome greeting="Hello" />
+      </div>
+    );
+  }
+}
+
+export default App;
+------------------------------------------------------------------------
+
+
+# initial code 
+
+# File: src/App.js
+
+import {Component} from 'react'
+
+import Welcome from './components/Welcome'
+
+import './App.css'
+
+class App extends Component {
+  state = {
+    isLoggedIn: true,
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <Welcome greeting="Hello" name="User" />
+        <button>Login</button>
+        <button>Logout</button>
+      </div>
+    )
+  }
+}
+
+export default App
+
+
+# File: src/Welcome/index.js
+
+import './index.css'
+
+const Welcome = props => {
+  const {name, greeting} = props
+  return (
+    <h1 className="message">
+      {greeting}, {name}
+    </h1>
+  )
+}
+
+export default Welcome
+
+
+------------------------------------------------------------------------
+
+## Publish
+# https://userloginsai.ccbp.tech
+
